@@ -6,8 +6,8 @@ const CoinCard = ({ card }) => {
       <div className="coin-header">
         <div>
           <h2>{card.title}</h2>
-          <p>{card.subtitle}</p>
-          <p>{card.description}</p>
+          {card.subtitle && <p>{card.subtitle}</p>}
+          {card.description && <p>{card.description}</p>}
         </div>
       </div>
     </Link>

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import CardComponent from "../components/Card";
 import FilterInput from "../components/FilterInput";
-import { Card } from "./types/card";
+import { Card } from "../types/card";
 
 export default function HomeClient({ cards }: { cards: Card[] }) {
   const [filter, setFilter] = useState("");
@@ -11,9 +11,9 @@ export default function HomeClient({ cards }: { cards: Card[] }) {
   const filteredCards = cards.filter((card) => {
     const q = filter.toLowerCase();
     return (
-      card.title.toLowerCase().includes(q) ||
-      card.subtitle.toLowerCase().includes(q) ||
-      card.description.toLowerCase().includes(q)
+        (card.title?.toLowerCase().includes(q) ?? false) ||
+        (card.subtitle?.toLowerCase().includes(q) ?? false) ||
+        (card.description?.toLowerCase().includes(q) ?? false)
     );
   });
 
