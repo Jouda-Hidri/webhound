@@ -1,21 +1,19 @@
 "use client";
 
 import { useState } from "react";
-import CoinCard from "../components/CoinCard";
+import CardComponent from "../components/Card";
 import FilterInput from "../components/FilterInput";
+import { Card } from "./types/card";
 
-import Spinner from "../components/Spinner";
-import { Coin } from "./page";
-
-export default function HomeClient({ coins }: { coins: Coin[] }) {
+export default function HomeClient({ cards }: { cards: Card[] }) {
   const [filter, setFilter] = useState("");
 
-  const filteredCoins = coins.filter((coin) => {
+  const filteredCards = cards.filter((card) => {
     const q = filter.toLowerCase();
     return (
-      coin.username.toLowerCase().includes(q) ||
-      coin.name.toLowerCase().includes(q) ||
-      coin.email.toLowerCase().includes(q)
+      card.title.toLowerCase().includes(q) ||
+      card.subtitle.toLowerCase().includes(q) ||
+      card.description.toLowerCase().includes(q)
     );
   });
 
@@ -28,9 +26,9 @@ export default function HomeClient({ coins }: { coins: Coin[] }) {
       </div>
 
       <main className="grid">
-        {filteredCoins.length > 0 ? (
-          filteredCoins.map((coin) => (
-            <CoinCard key={coin.id} coin={coin} />
+        {filteredCards.length > 0 ? (
+          filteredCards.map((card) => (
+            <CardComponent key={card.id} card={card} />
           ))
         ) : (
           <p>No matching cards</p>

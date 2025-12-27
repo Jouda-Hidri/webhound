@@ -1,5 +1,5 @@
 import HomeClient from "./home-client";
-import { Coin } from "./types/coin";
+import { Card } from "./types/card";
 
 export default async function HomePage() {
   const res = await fetch("https://jsonplaceholder.typicode.com/users", {
@@ -10,7 +10,15 @@ export default async function HomePage() {
     throw new Error("Failed to fetch users");
   }
 
-  const coins: Coin[] = await res.json();
+  const response = await res.json();
 
-  return <HomeClient coins={coins} />;
+    const cards: Card[] = response.map((item: any) => ({
+    id: item.id,
+    title: item.username,
+    subtitle: item.name,
+    description: item.email,
+    icon: null,
+  }));
+
+  return <HomeClient cards={cards} />;
 }
