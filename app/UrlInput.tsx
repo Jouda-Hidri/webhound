@@ -9,6 +9,7 @@ const DEFAULT_URL = "https://jsonplaceholder.typicode.com/users";
 
 export default function UrlInput() {
   const [url, setUrl] = useState(DEFAULT_URL);
+    const [useAI, setUseAI] = useState(true);
   const [cards, setCards] = useState<Card[] | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -22,7 +23,7 @@ export default function UrlInput() {
 
     try {
       const res = await fetch(
-        `/api/fetch?url=${encodeURIComponent(url)}`
+        `/api/fetch?url=${encodeURIComponent(url)}&ai=${useAI}`
       );
 
       if (!res.ok) {
@@ -48,6 +49,14 @@ export default function UrlInput() {
   return (
     <div>
       <form onSubmit={handleSubmit}>
+        <label className="controls">
+          <input
+            type="checkbox"
+            checked={useAI}
+            onChange={(e) => setUseAI(e.target.checked)}
+          />
+          Use AI
+        </label>
         <input
           type="url"
           value={url}

@@ -4,6 +4,7 @@ import { Card } from "@/types/card";
 
 export async function GET(req: NextRequest) {
   const url = req.nextUrl.searchParams.get("url");
+  const useAI = req.nextUrl.searchParams.get("ai") === "true";
 
   if (!url) {
     return NextResponse.json({ error: "Missing url" }, { status: 400 });
@@ -15,15 +16,21 @@ export async function GET(req: NextRequest) {
   }
 
   const response = await res.json();
-  const cards: Card[] = await parse(response);
+  let cards: Card[];
 
-  // const cards: Card[] = response.map((item: any) => ({
-  //   id: String(item.id),
-  //   title: item.username,
-  //   subtitle: item.name,
-  //   description: item.email,
-  //   icon: null,
-  // }));
+  if (useAI) {
+    // 🤖 AI parsing
+    cards = await parse(response);
+  } else {
+    // 🧱 Default/manual parsing
+    cards = response.map((item: any) => ({
+      id: String(item.id),
+      title: item.username,
+      subtitle: item.name,
+      description: item.email,
+      icon: null,
+    }));
+  }
 
   return NextResponse.json(cards);
 }
