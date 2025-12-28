@@ -4,7 +4,7 @@ const FilterInput = ({ filter, onFilterChange }) => {
       <input
         type='text'
         value={filter}
-        placeholder='Filter cards by name, username or email'
+        placeholder='Filter cards ...'
         onChange={(e) => onFilterChange(e.target.value)}
       />
     </div>

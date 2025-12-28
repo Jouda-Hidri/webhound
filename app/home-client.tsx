@@ -19,8 +19,6 @@ export default function HomeClient({ cards }: { cards: Card[] }) {
 
   return (
     <div>
-      <h1>🚀 Webhound</h1>
-
       <div className="top-controls">
         <FilterInput filter={filter} onFilterChange={setFilter} />
       </div>
