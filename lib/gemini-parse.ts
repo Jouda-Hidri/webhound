@@ -15,15 +15,26 @@ const model = client.getGenerativeModel({
 
 export async function parse(items: any[]): Promise<Card[]> {
 const prompt = `
-You are an AI that normalizes arbitrary JSON objects into a UI-friendly array of cards.
+You are an AI that normalizes arbitrary JSON responses into a UI-friendly array of cards.
+
+The input may be:
+- A raw array
+- An object containing an array under keys like "data", "items", "results", "records", or similar
+- A deeply nested structure
 
 Instructions:
-- Return only valid JSON.
-- Do NOT include code fences, explanations, or any extra text.
-- Output must be an array of objects.
-- Each object must have the following fields:
-  - "id" (string)
-  - "title" (string)
+- First, locate the most relevant array of objects in the input.
+- If multiple arrays exist, choose the one that best represents a list of entities.
+- Ignore pagination, metadata, and wrapper fields.
+- Normalize each item into a card.
+
+Output rules:
+- Return ONLY valid JSON
+- Do NOT include explanations, comments, or code fences
+- Output MUST be a JSON array
+- Each object must contain the most important data that parses into these fields:
+  - "id" (string, generate if missing)
+  - "title" (string, best primary label)
   - "subtitle" (string, optional)
   - "description" (string, optional)
   - "icon" (string, optional)
