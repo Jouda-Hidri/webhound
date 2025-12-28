@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import HomeClient from "./home-client";
 import { Card } from "../types/card";
+import Spinner from "../components/Spinner"
 
 const DEFAULT_URL = "https://jsonplaceholder.typicode.com/users";
 
@@ -56,7 +57,7 @@ export default function UrlInput() {
         />
       </form>
 
-      {loading && <p>Loading...</p>}
+      {loading && <Spinner color='white' />}
       {error && <p className="text-red-500">{error}</p>}
 
       {cards && <HomeClient cards={cards} />}

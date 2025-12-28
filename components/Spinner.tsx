@@ -9,10 +9,14 @@ const Spinner = ({ color = 'blue', size = '150' }) => {
   return (
     <div>
       <BarLoader
-        color={color}
-        size={size}
-        cssOverride={override}
-        aria-label='Loading...'
+        color="#3b82f6"
+        width={300}
+        height={4}
+        cssOverride={{
+          display: "block",
+          margin: "0 auto",
+        }}
+        aria-label="Loading"
       />
     </div>
   );
