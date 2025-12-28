@@ -1,12 +1,12 @@
-import { Card } from "@/types/card";
 import { notFound } from "next/navigation";
+import { Card } from "./Card";
 
 interface CardPageProps {
   params: Promise<{ id: string}>;
 }
 
-export default async function CoinDetailsPage(context: CardPageProps) {
-  const params = await context.params;
+export default async function CoinDetailsPage(props: CardPageProps) {
+  const params = await props.params;
   const id = params.id;
   const API_URL = "https://jsonplaceholder.typicode.com/users";
   const res = await fetch(`${API_URL}?id=${id}`, { cache: "no-store" });
@@ -19,8 +19,6 @@ export default async function CoinDetailsPage(context: CardPageProps) {
   if (!response) notFound();
 
   return (
-    <pre style={{ fontFamily: "monospace", fontSize: "14px" }}>
-      {JSON.stringify(response, null, 2)}
-    </pre>
+    <Card data={response}/>
   );
 }

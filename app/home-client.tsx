@@ -5,7 +5,8 @@ import CardComponent from "../components/Card";
 import FilterInput from "../components/FilterInput";
 import { Card } from "../types/card";
 
-export default function HomeClient({ cards }: { cards: Card[] }) {
+export default function HomeClient(
+    { cards }: { cards: Card[] }) {
     const [filter, setFilter] = useState("");
 
     const filteredCards = cards.filter((card) => {
@@ -26,7 +27,7 @@ export default function HomeClient({ cards }: { cards: Card[] }) {
             <main className="grid">
                 {filteredCards.length > 0 ? (
                     filteredCards.map((card) => (
-                        <CardComponent key={card.id} card={card} />
+                        <CardComponent key={card.id} card={card}/>
                     ))
                 ) : (
                     <p>No matching cards</p>

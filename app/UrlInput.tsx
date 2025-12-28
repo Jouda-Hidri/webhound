@@ -4,11 +4,11 @@ import { useEffect, useState } from "react";
 import HomeClient from "./home-client";
 import { Card } from "../types/card";
 import Spinner from "../components/Spinner"
+import { useApiUrl } from "./context/ApiUrlContext";
 
-const DEFAULT_URL = "https://jsonplaceholder.typicode.com/users";
 
-export default function UrlInput() {
-  const [url, setUrl] = useState(DEFAULT_URL);
+export default function apiUrlInput() {
+  const {apiUrl, setApiUrl} = useApiUrl()
   const [useAI, setUseAI] = useState(false);
   const [cards, setCards] = useState<Card[] | null>(null);
   const [loading, setLoading] = useState(false);
@@ -16,14 +16,14 @@ export default function UrlInput() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault(); // ⛔ stop page reload
-    if (!url) return;
+    if (!apiUrl) return;
 
     setLoading(true);
     setError(null);
 
     try {
       const res = await fetch(
-        `/api/fetch?url=${encodeURIComponent(url)}&ai=${useAI}`
+        `/api/fetch?url=${encodeURIComponent(apiUrl)}&ai=${useAI}`
       );
 
       if (!res.ok) {
@@ -59,9 +59,9 @@ export default function UrlInput() {
         </label>
         <input
           type="url"
-          value={url}
-          onChange={(e) => setUrl(e.target.value)}
-          placeholder="Enter API URL"
+          value={apiUrl}
+          onChange={(e) => setApiUrl(e.target.value)}
+          placeholder="Enter API apiUrl"
           className="top-controls"
         />
       </form>
