@@ -2,7 +2,7 @@ import { Card } from "@/types/card";
 import { notFound } from "next/navigation";
 
 interface CardPageProps {
-  params: Promise<{ id: string }>;
+  params: Promise<{ id: string}>;
 }
 
 export default async function CoinDetailsPage(context: CardPageProps) {
