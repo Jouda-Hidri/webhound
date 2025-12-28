@@ -9,7 +9,7 @@ const DEFAULT_URL = "https://jsonplaceholder.typicode.com/users";
 
 export default function UrlInput() {
   const [url, setUrl] = useState(DEFAULT_URL);
-    const [useAI, setUseAI] = useState(true);
+    const [useAI, setUseAI] = useState(false);
   const [cards, setCards] = useState<Card[] | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
