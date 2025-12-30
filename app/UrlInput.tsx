@@ -69,7 +69,7 @@ export default function apiUrlInput() {
       {loading && <Spinner color='white' />}
       {error && <p className="text-red-500">{error}</p>}
 
-      {cards && <HomeClient cards={cards} />}
+      {cards && <HomeClient cards={cards} useAI={useAI}/>}
     </div>
   );
 }
