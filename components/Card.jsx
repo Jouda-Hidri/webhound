@@ -1,8 +1,8 @@
 import Link from "next/link";
 
-const CoinCard = ({ card }) => {
+const CoinCard = ({ card, aiFlag }) => {
   return (
-    <Link href={`/card/${card.id}`} className="coin-card">
+    <Link href={`/card/${card.id}?ai=${aiFlag}`} className="coin-card">
       <div className="coin-header">
         <div>
           <h2>{card.title}</h2>

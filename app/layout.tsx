@@ -1,4 +1,5 @@
 import Header from '../components/Header';
+import { AiFlagProvider } from './context/AiFlagContext';
 import { ApiUrlProvider } from './context/ApiUrlContext';
 import './globals.css';
 
@@ -10,10 +11,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body>
-        <ApiUrlProvider>
-          <Header />
-          {children}
-        </ApiUrlProvider>
+        <AiFlagProvider>
+          <ApiUrlProvider>
+            <Header />
+            {children}
+          </ApiUrlProvider>
+        </AiFlagProvider>
       </body>
     </html>
   );

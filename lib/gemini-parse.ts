@@ -48,3 +48,40 @@ ${JSON.stringify(items)}
 
   return JSON.parse(text) as Card[];
 }
+
+
+export async function parseDetails(items: any[], id:string): Promise<Card> {
+const prompt = `
+You are an AI that normalizes arbitrary JSON responses into a UI-friendly card details.
+
+The input may be:
+- A raw array
+- An object containing an array under keys like "data", "items", "results", "records", or similar
+- A deeply nested structure
+
+Instructions:
+- First, locate the most relevant array of entities in the input.
+- If multiple arrays exist, choose the one that best represents a list of entities and the ID = ${id}.
+- Ignore pagination, metadata, and wrapper fields.
+- Find the entity in the array related to the ID = ${id}.
+
+Output rules:
+- Return ONLY valid JSON
+- Do NOT include explanations, comments, or code fences
+- Output MUST be a JSON entity
+- The entity must contain the most important data that parses into these fields:
+  - "id" (string, generate if missing)
+  - "title" (string, best primary label)
+  - "subtitle" (string, optional)
+  - "description" (string, optional)
+  - "icon" (string, optional)
+
+Input JSON:
+${JSON.stringify(items)}
+`;
+  const result = await model.generateContent(prompt);
+  const text = result.response.text();
+  // const cleaned = text.replace(/```json|```/g, "").trim();
+
+  return JSON.parse(text) as Card;
+}

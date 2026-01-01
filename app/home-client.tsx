@@ -6,7 +6,7 @@ import FilterInput from "../components/FilterInput";
 import { Card } from "../types/card";
 
 export default function HomeClient(
-    { cards }: { cards: Card[] }) {
+    { cards, aiFlag }: { cards: Card[], aiFlag : boolean }) {
     const [filter, setFilter] = useState("");
 
     const filteredCards = cards.filter((card) => {
@@ -27,7 +27,7 @@ export default function HomeClient(
             <main className="grid">
                 {filteredCards.length > 0 ? (
                     filteredCards.map((card) => (
-                        <CardComponent key={card.id} card={card}/>
+                        <CardComponent key={card.id} card={card} aiFlag={aiFlag}/>
                     ))
                 ) : (
                     <p>No matching cards</p>

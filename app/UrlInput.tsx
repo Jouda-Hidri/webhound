@@ -5,11 +5,12 @@ import HomeClient from "./home-client";
 import { Card } from "../types/card";
 import Spinner from "../components/Spinner"
 import { useApiUrl } from "./context/ApiUrlContext";
+import { useAi } from "./context/AiFlagContext";
 
 
 export default function apiUrlInput() {
   const {apiUrl, setApiUrl} = useApiUrl()
-  const [useAI, setUseAI] = useState(false);
+  const {aiFlag, setUseAi} = useAi()
   const [cards, setCards] = useState<Card[] | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -23,7 +24,7 @@ export default function apiUrlInput() {
 
     try {
       const res = await fetch(
-        `/api/fetch?url=${encodeURIComponent(apiUrl)}&ai=${useAI}`
+        `/api/fetch?url=${encodeURIComponent(apiUrl)}&ai=${aiFlag}`
       );
 
       if (!res.ok) {
@@ -52,8 +53,8 @@ export default function apiUrlInput() {
         <label className="controls">
           <input
             type="checkbox"
-            checked={useAI}
-            onChange={(e) => setUseAI(e.target.checked)}
+            checked={aiFlag}
+            onChange={(e) => setUseAi(e.target.checked)}
           />
           Use AI
         </label>
@@ -69,7 +70,7 @@ export default function apiUrlInput() {
       {loading && <Spinner color='white' />}
       {error && <p className="text-red-500">{error}</p>}
 
-      {cards && <HomeClient cards={cards} useAI={useAI}/>}
+      {cards && <HomeClient cards={cards} aiFlag={aiFlag}/>}
     </div>
   );
 }
