@@ -7,7 +7,7 @@ type Props = {
     data: Record<string, unknown>,
 }
 
-export function Card({data}: Props) {
+export function CardComponent({data}: Props) {
     const {apiUrl} =useApiUrl()
     const {aiFlag} =useAi()
     return <pre style={{ fontFamily: "monospace", fontSize: "14px" }}>

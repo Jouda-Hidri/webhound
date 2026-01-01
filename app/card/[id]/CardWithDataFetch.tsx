@@ -1,6 +1,7 @@
 "use client"
 
-import { Card } from "./Card";
+import { CardComponent } from "./Card";
+import { Card } from "@/types/card";
 import { useApiUrl } from "@/app/context/ApiUrlContext";
 import { useAi } from "@/app/context/AiFlagContext";
 import { useEffect, useState } from "react";
@@ -18,14 +19,14 @@ export function CardWithDataFetch({ id }: { id: string }) {
     }
 
     fetchData()
-      .then(data => aiFlag ? parseCardDetails(data, id) : data) // TODO ?id=$id for default flow
-      .then(parsedData => setData(parsedData));
+      .then(data => aiFlag ? parseCardDetails(data, id) : (data as Card[]).find(d => d.id == id)) // TODO ?id=$id for default flow
+      .then(parsedData => setData(parsedData ?? null));
 
   }, [])
 
   if (!data) return null
 
   return (
-    <Card data={data} />
+    <CardComponent data={data} />
   );
 }
