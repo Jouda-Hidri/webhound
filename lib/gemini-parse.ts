@@ -1,16 +1,11 @@
-import "server-only";  // ensures this is server-only
+import "server-only";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { Card } from "@/types/card";
-
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
-// const model = genAI.getGenerativeModel({
-//   model: "gemini-1.5-flash",
-// });
 
 const client = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
 
 const model = client.getGenerativeModel({
-  model: "gemini-2.5-flash", // must match available AI Studio models
+  model: "gemini-2.5-flash",
 });
 
 export async function parse(items: any[]): Promise<Card[]> {

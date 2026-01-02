@@ -6,6 +6,7 @@ import { Card } from "../types/card";
 import Spinner from "../components/Spinner"
 import { useApiUrl } from "./context/ApiUrlContext";
 import { useAi } from "./context/AiFlagContext";
+import { redirect } from 'next/navigation';
 
 
 export default function apiUrlInput() {
@@ -13,14 +14,12 @@ export default function apiUrlInput() {
   const {aiFlag, setUseAi} = useAi()
   const [cards, setCards] = useState<Card[] | null>(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault(); // ⛔ stop page reload
     if (!apiUrl) return;
 
     setLoading(true);
-    setError(null);
 
     try {
       const res = await fetch(
@@ -36,7 +35,7 @@ export default function apiUrlInput() {
       setCards(data);
     } catch (err: any) {
       console.error(err);
-      setError(err.message);
+      redirect('/server-error');
     } finally {
       setLoading(false);
     }
@@ -68,7 +67,6 @@ export default function apiUrlInput() {
       </form>
 
       {loading && <Spinner color='white' />}
-      {error && <p className="text-red-500">{error}</p>}
 
       {cards && <HomeClient cards={cards} aiFlag={aiFlag}/>}
     </div>
