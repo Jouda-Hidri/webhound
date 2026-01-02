@@ -68,7 +68,7 @@ export default function apiUrlInput() {
 
       {loading && <Spinner color='white' />}
 
-      {cards && <HomeClient cards={cards} aiFlag={aiFlag}/>}
+      {cards && <HomeClient cards={cards} />}
     </div>
   );
 }
